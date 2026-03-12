@@ -1,31 +1,15 @@
-# SOC-Automation-Project
-Created by: Ben Holomah
-Goal: Land a Junior SOC analyst role by May 2026
-This is a "journal entry" of my process creating my first SOC automation lab. My purpose in creating it is to help me gain and apply technical skills that I'd be using as a SOC analyst. I want to document the journey, displaying my my logic, desire to sharpen my skills, and desire to acquire experience using tools used in the field.
-
----
+# SOC Automation Project
+Built By: Ben Holomah
 
 ## Homelab Enviornment Baseline
 - **Hypervisor:** VMware
 - **SIEM:** Wazuh
 - **Endpoints:** Windows 10, Kali Linux Server
 
----
-
-## Baseline Setup
-**Date** January 21, 2026
-- I installed win10 onto my VM. During the installation process I opted for a Local Account via the Offline Account/ Limited Experience path.
-
-**Logic:** I figured it would provide a cleaner lab enviroment for me. It'll reduce any Microsoft cloud sync services logs or anything related.
-
-- I wanted to confirm that my offline account was already an admin for my own peace of mind by entering the command 'net user %username%'. (It was).
-
----
-
-SOC Automation Project
 ## Overview
 - I started this lab by creating a network diagram to visualize the architecture and understand the flow of data between components before beginning implementation.
 [SCREENSHOT: Network/architecture diagram]
+
 ---
 ## Windows Configuration — Sysmon
 - I downloaded Sysmon along with a Sysmon configuration file to define what events to monitor.
@@ -85,8 +69,9 @@ After investigation I identified two issues:
 1. xpack.security.enabled: true was requiring SSL certificates that didn't exist
 2. The auto-generated security configuration block was conflicting with my settings
 
-I resolved this by removing the entire security auto-configuration block from elasticsearch.yml and adding xpack.security.enabled: false.
-After approximately 45 minutes of troubleshooting, I discovered the root cause — the lab walkthrough was built on Elasticsearch v7, while my system had installed v8, which enables security by default and has breaking configuration changes. I removed v8, pinned the installation to v7.17, and Elasticsearch started successfully.
+- I resolved this by removing the entire security auto-configuration block from elasticsearch.yml and adding xpack.security.enabled: false.
+- After approximately 45 minutes of troubleshooting, I discovered the root cause — the lab walkthrough was built on Elasticsearch v7, while my system had installed v8, which enables security by default and has breaking configuration changes.
+- I removed v8, pinned the installation to v7.17, and Elasticsearch started successfully.
 [SCREENSHOT: Elasticsearch service running after fix]
 [SCREENSHOT: elasticsearch.yml final configuration]
 ---
