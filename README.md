@@ -9,6 +9,7 @@ Built By: Ben Holomah
 ## Overview
 - I started this lab by creating a network diagram to visualize the architecture and understand the flow of data between components before beginning implementation.
 [SCREENSHOT: Network/architecture diagram]
+<img width="935" height="862" alt="Screenshot 2026-03-06 182616" src="https://github.com/user-attachments/assets/a575c5e2-7534-435a-a7ea-e8e2805739ca" />
 
 ---
 ## Windows Configuration — Sysmon
