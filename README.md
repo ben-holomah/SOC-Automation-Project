@@ -33,9 +33,18 @@ SSH Setup:
 - Retrieved the Ubuntu VM's IP address using ip a
 - Attempted to SSH from PowerShell but received a "connection refused" error
 - Through research I learned SSH needed to be installed and enabled on the VM first
-- Installed SSH using sudo apt install openssh-server -y
-- Enabled and started the service using sudo systemctl enable ssh && sudo systemctl start ssh
-- Verified it was running using sudo systemctl status ssh
+- Installed SSH using
+```
+sudo apt install openssh-server -y
+```
+- Enabled and started the service using
+```
+sudo systemctl enable ssh && sudo systemctl start ssh
+```
+- Verified it was running using
+```
+  sudo systemctl status ssh
+```
 
 [SCREENSHOT: SSH status showing active/running]
 <img width="820" height="437" alt="Screenshot 2026-03-09 193212" src="https://github.com/user-attachments/assets/a1362b66-3082-49c2-b5d9-1757570c6941" />
@@ -45,7 +54,10 @@ SSH Setup:
 ## Dependency Installation:
 
 - Updated and upgraded the system packages
-- Installed Java and verified the installation using java -version
+- Installed Java and verified the installation using
+```
+  java -version
+```
 - Installed and configured Apache Cassandra
 - Installed Elasticsearch
 - Installed TheHive
@@ -83,7 +95,11 @@ Note: A recurring mishap during this phase was forgetting to prepend sudo to com
 - Removed the secondary node from cluster.initial_master_nodes
 
 ## Troubleshooting:
-When attempting to start Elasticsearch I received an error. I checked the journal log using sudo journalctl -xeu elasticsearch.service which returned status=70/SOFTWARE, indicating a crash at the software level.
+When attempting to start Elasticsearch I received an error. I checked the journal log using
+```
+sudo journalctl -xeu elasticsearch.service
+```
+which returned status=70/SOFTWARE, indicating a crash at the software level.
 
 After investigation I identified two issues:
 1. xpack.security.enabled: true was requiring SSL certificates that didn't exist
@@ -100,7 +116,10 @@ After investigation I identified two issues:
 
 ---
 ## TheHive Configuration & Access
-- Modified ownership of the /opt/thp directory using chown -R thehive:thehive /opt/thp
+- Modified ownership of the /opt/thp directory using
+```
+chown -R thehive:thehive /opt/thp
+```
 - Successfully accessed TheHive via browser at http://<TheHive-IP>:9000
 
 [SCREENSHOT: TheHive login page]
