@@ -12,6 +12,7 @@ Built By: Ben Holomah
 <img width="935" height="862" alt="Screenshot 2026-03-06 182616" src="https://github.com/user-attachments/assets/a575c5e2-7534-435a-a7ea-e8e2805739ca" />
 
 ---
+
 ## Windows Configuration — Sysmon
 - I downloaded Sysmon along with a Sysmon configuration file to define what events to monitor.
 
@@ -26,7 +27,9 @@ Built By: Ben Holomah
 <img width="807" height="589" alt="Screenshot 2026-03-06 185223" src="https://github.com/user-attachments/assets/3bc81651-6795-4e98-88ab-841c6e11c909" />
 
 ---
+
 ## TheHive Server Setup — Ubuntu VM
+
 - I created a dedicated Ubuntu server for TheHive and managed it remotely via SSH from my host machine. I chose SSH because it is a cleaner, more realistic method of server management and a skill I wanted to develop.
 SSH Setup:
 
@@ -48,6 +51,7 @@ sudo systemctl enable ssh && sudo systemctl start ssh
 
 [SCREENSHOT: SSH status showing active/running]
 <img width="820" height="437" alt="Screenshot 2026-03-09 193212" src="https://github.com/user-attachments/assets/a1362b66-3082-49c2-b5d9-1757570c6941" />
+
 [SCREENSHOT: Successful SSH connection from PowerShell]
 <img width="1109" height="572" alt="Screenshot 2026-03-09 194005" src="https://github.com/user-attachments/assets/8cacbc14-6141-44e9-af2b-b5cd511f6490" />
 
@@ -89,8 +93,11 @@ sudo systemctl enable ssh && sudo systemctl start ssh
 <img width="1100" height="609" alt="Screenshot 2026-03-09 202105" src="https://github.com/user-attachments/assets/a7187b92-9200-41be-acf1-9f9230c92477" />
 
 Note: A recurring mishap during this phase was forgetting to prepend sudo to commands when working as a non-root user over SSH. Unlike cloud-hosted servers which default to root access, my local VM required explicit privilege escalation — a good real-world security practice.
+
 ---
+
 ## Elasticsearch Configuration & Troubleshooting
+
 - Uncommented and configured cluster.name, node.name, network.host, http.port, and cluster.initial_master_nodes
 - Removed the secondary node from cluster.initial_master_nodes
 
@@ -108,6 +115,7 @@ After investigation I identified two issues:
 - I resolved this by removing the entire security auto-configuration block from elasticsearch.yml and adding xpack.security.enabled: false.
 - After approximately 45 minutes of troubleshooting, I discovered the root cause — the lab walkthrough was built on Elasticsearch v7, while my system had installed v8, which enables security by default and has breaking configuration changes.
 - I removed v8, pinned the installation to v7.17, and Elasticsearch started successfully.
+
 [SCREENSHOT: Elasticsearch service running after fix]
 <img width="1110" height="514" alt="Screenshot 2026-03-09 212906" src="https://github.com/user-attachments/assets/96c5dbbd-9933-4981-9fce-10b27a4557e7" />
 
@@ -115,7 +123,9 @@ After investigation I identified two issues:
 <img width="1105" height="1315" alt="Screenshot 2026-03-09 204233" src="https://github.com/user-attachments/assets/43fd3a96-fd87-48d5-9ed0-2fbeef05351e" />
 
 ---
+
 ## TheHive Configuration & Access
+
 - Modified ownership of the /opt/thp directory using
 ```
 chown -R thehive:thehive /opt/thp
@@ -129,6 +139,7 @@ chown -R thehive:thehive /opt/thp
 <img width="1279" height="911" alt="Screenshot 2026-03-09 215442" src="https://github.com/user-attachments/assets/5f10f935-0b9b-4283-b858-7a5b72c7cf17" />
 
 ---
+
 ## Wazuh — Windows Agent Configuration
 
 - Configured the Windows 11 VM as a Wazuh agent
@@ -143,6 +154,7 @@ chown -R thehive:thehive /opt/thp
 <img width="1366" height="1297" alt="Screenshot 2026-03-09 224255" src="https://github.com/user-attachments/assets/edcc7d5a-aac5-4a6f-9086-400218935ec2" />
 
 ---
+
 ## Mimikatz Detection
 
 - Disabled Windows Defender on the Windows 11 VM to allow testing
@@ -192,7 +204,9 @@ Successfully received an alert in the wazuh-alerts index upon execution
 [SCREENSHOT: Email notification received]
 <img width="1689" height="1110" alt="Screenshot 2026-03-10 024211" src="https://github.com/user-attachments/assets/8e8905d2-123c-4c95-b3c1-0b2bbe4e9751" />
 ## Note: Shuffle's built-in email node confirmed successful dispatch ("success": true) however the email was never received. This is a known issue with Shuffler.io's shared mail server, which has poor sender reputation and is frequently blocked by email providers. In a production environment this would be replaced with a dedicated SMTP integration for reliable delivery.
+
 ---
+
 Summary
 This project demonstrated the full pipeline of a SOC automation workflow:
 Mimikatz executed on Windows → Sysmon detects it → Wazuh agent forwards log → Wazuh manager triggers custom rule → Shuffle SOAR receives webhook → Hash extracted and submitted to VirusTotal → Alert created in TheHive → Analyst notified via email
